@@ -1,12 +1,11 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
+import Header from "@/components/layouts/Header";
 
 export default function Home() {
   return (
-    <main>
-      <h1>Hello devlyrics</h1>
-      <Button>Button</Button>
-    </main>
+    <>
+      <Header />
+    </>
   );
 }
