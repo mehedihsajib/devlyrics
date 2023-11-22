@@ -1,30 +1,10 @@
-const { MongoClient } = require("mongodb");
+import mongoose from "mongoose";
 
-const MONGODB_URI = process.env.MONGODB_URI;
-const DB_NAME = "crud";
-
-let cachedClient = null;
-
-async function connectToDatabase() {
-  if (cachedClient) {
-    return cachedClient;
-  }
-
+export const connectMongoDB = async () => {
   try {
-    const client = new MongoClient(MONGODB_URI, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
-
-    await client.connect();
+    await mongoose.connect(process.env.MONGODB_URI);
     console.log("Connected to MongoDB");
-
-    cachedClient = client;
-    return client;
   } catch (error) {
-    console.error("Error connecting to MongoDB:", error.message);
-    throw error;
+    console.log("Error connecting to MongoDB: ", error);
   }
-}
-
-module.exports = connectToDatabase;
+};
