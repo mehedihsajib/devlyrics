@@ -74,7 +74,9 @@ export default function Header() {
                 </DropdownMenuContent>
               </DropdownMenu>
             ) : (
-              <Button variant="outline">Login</Button>
+              <Button asChild variant="outline">
+                <Link href="/login">Login</Link>
+              </Button>
             )}
           </div>
         </div>
