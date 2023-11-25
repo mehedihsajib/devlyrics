@@ -1,8 +1,12 @@
+"use client";
+
 import Link from "next/link";
+import { useSession } from "next-auth/react";
+import { signOut } from "next-auth/react";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
-import { LogOut, Settings, User, UserPlus, Users } from "lucide-react";
+import { LogOut, Settings, User, BadgePlus } from "lucide-react";
 
 import {
   DropdownMenu,
@@ -10,18 +14,16 @@ import {
   DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
-  DropdownMenuPortal,
   DropdownMenuSeparator,
   DropdownMenuShortcut,
-  DropdownMenuSub,
-  DropdownMenuSubContent,
-  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import Logo from "../Logo";
 
 export default function Header() {
-  const isLogin = false;
+  const { data: session } = useSession();
+  console.log(session);
+
   return (
     <header className="py-5 border-b border-zinc-800">
       <div className="container">
@@ -38,7 +40,7 @@ export default function Header() {
             </div>
           </form>
           <div className="flex gap-3 items-center">
-            {isLogin ? (
+            {session ? (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Avatar className="cursor-pointer">
@@ -58,7 +60,11 @@ export default function Header() {
                       <span>Profile</span>
                       <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
                     </DropdownMenuItem>
-
+                    <DropdownMenuItem>
+                      <BadgePlus className="mr-2 h-4 w-4" />
+                      <span>Create a post</span>
+                      <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
+                    </DropdownMenuItem>
                     <DropdownMenuItem>
                       <Settings className="mr-2 h-4 w-4" />
                       <span>Settings</span>
@@ -68,7 +74,7 @@ export default function Header() {
                   <DropdownMenuSeparator />
                   <DropdownMenuItem>
                     <LogOut className="mr-2 h-4 w-4" />
-                    <span>Log out</span>
+                    <button onClick={() => signOut()}>Log out</button>
                     <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
                   </DropdownMenuItem>
                 </DropdownMenuContent>
